@@ -1,0 +1,45 @@
+/* LoginStyles.css */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-link {
+    text-decoration: none;
+    color: red;
+    display: block;
+    margin-top: 10px;
+}
+
+.login-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.login-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-button {
+    background-color: rgb(68, 67, 67);
+    color: white;
+    padding: 12px 0;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
