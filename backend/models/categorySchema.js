@@ -6,7 +6,7 @@ const categorySchema = new mongoose.Schema(
     description: String,
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "app_wrk_restaurants"
+      ref: "app_wrk_restaurant"
     },
   },
   { timestamps: true }

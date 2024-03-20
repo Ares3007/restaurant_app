@@ -6,7 +6,7 @@ const menuSchema = new mongoose.Schema(
     price: String,
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "app_wrk_restaurants_category"
+      ref: "app_wrk_restaurant_category"
     },
   },
   { timestamps: true }

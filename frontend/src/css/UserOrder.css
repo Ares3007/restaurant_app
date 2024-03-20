@@ -1,0 +1,28 @@
+.menu-container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .menu-category {
+    margin-bottom: 10px;
+  }
+  
+  .menu-item label {
+    margin-left: 10px;
+  }
+  
+  .selected-items {
+    margin-top: 20px;
+  }
+  
+  .selected-item label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .selected-item input {
+    width: 200px;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  

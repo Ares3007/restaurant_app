@@ -2,10 +2,10 @@ const menuModel = require('../models/menuSchema');
 
 const getMenu = async (req, res) => {
     try {
-        const data = await menuModel.find();
+        const data = await menuModel.find().populate('category');
         res.send(data);
     } catch (error) {
-        res.status(500).json({ msg: 'Error in getting menu' });
+        res.status(500).json({ msg: 'Error in getting menu details' });
     }
 }
 
