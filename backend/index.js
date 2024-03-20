@@ -3,6 +3,7 @@ const user = require("./routes/userRoutes");
 const connection = require("./config/db");
 const cors = require("cors");
 const menu = require("./routes/menuRoutes");
+const category = require("./routes/categoryRoutes");
 const app = express();
 
 require("dotenv").config();
@@ -21,10 +22,11 @@ app.get("/", (req, res) => {
   }
 });
 
-app.use("/api/", user);
-app.use("/menu/", menu);
+app.use("/api", user);
+app.use("/menu", menu);
+app.use("/category",category)
 
-app.listen(PORT, async (req, res) => {
+app.listen(PORT, async () => {
   try {
     await connection;
     console.log(`Running on ${PORT} and connected to database`);

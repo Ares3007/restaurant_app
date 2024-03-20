@@ -11,10 +11,11 @@ function Login() {
    e.preventDefault();
     try {
         const {data} =  await axios.post("http://localhost:8000/api/login",{mail,pass});
+      //  console.log(data.user._id)
         if(data.message==='login success'){
           localStorage.setItem('token',data.token);
           alert("Login successful!!!")
-            window.location.href='/menu'
+            window.location.href=`/admin-menu/${data.user._id}`
         }else{
           alert("Login failed! Please check mail or password");
         }
