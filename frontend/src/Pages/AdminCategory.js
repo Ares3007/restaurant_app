@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import "../css/adminMenu.css";
 
-function AdminMenu() {
+function AdminCategory() {
   const [category, setCategory] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newName, setNewName] = useState("");
-  const [newPrice, setNewPrice] = useState("");
+  const [newDescription, setNewDescription] = useState("");
   const [editName, setEditName] = useState("");
-  const [editPrice, setEditPrice] = useState("");
-  const [selectedMenuId, setSelectedMenuId] = useState(null);
+  const [editDescription, setEditDescription] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   const token = localStorage.getItem("token");
   const { id } = useParams();
@@ -24,38 +25,36 @@ function AdminMenu() {
     const getData = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8000/menu/get-by-id/${id}`
+          "http://localhost:8000/category/all-category"
         );
         setCategory(data);
       } catch (error) {
         console.log(error);
       }
     };
-    getData(id);
+    getData();
   }, []);
 
-
   const handelUpdate = async (id) => {
-    setSelectedMenuId(id);
-    console.log(selectedMenuId)
+    setSelectedCategoryId(id);
     setShowModal(true);
   };
 
   const handelEditModal = async () => {
     try {
-      if (!editName || !editPrice) {
+      if (!editName || !editDescription) {
         alert("All fields required");
       } else {
         const { data } = await axios.patch(
-          `http://localhost:8000/menu/edit-menu/${selectedMenuId}`,
-          { name: editName, price: editPrice },
+          `http://localhost:8000/category/edit-category/${selectedCategoryId}`,
+          { name: editName, description: editDescription },
           { headers }
         );
-        if (data.msg === "Menu data edited successfully") {
-          alert("Menu updated");
+        if (data.msg === "Category updated") {
+          alert("Category updated");
           window.location.reload();
         } else {
-          alert("error in updating menu");
+          alert("error in updating category");
         }
       }
     } catch (error) {
@@ -66,14 +65,14 @@ function AdminMenu() {
   const handelDelete = async (id) => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:8000/menu/delete-menu/${id}`,
+        `http://localhost:8000/category/delete-category/${id}`,
         { headers }
       );
-      if (data.msg === "Menu data deleted successfully") {
-        alert("Menu deleted");
+      if (data.msg === "Category deleted") {
+        alert("category deleted");
         window.location.reload();
       } else {
-        alert("Error in deleting menu");
+        alert("Error in deleting category");
       }
     } catch (error) {
       console.log("error in deleting");
@@ -86,19 +85,19 @@ function AdminMenu() {
 
   const handelAddModal = async () => {
     try {
-      if (!newName || !newPrice) {
+      if (!newName || !newDescription) {
         alert("All fields required");
       } else {
         const { data } = await axios.post(
-          "http://localhost:8000/menu/add-menu",
-          { name: newName, price: newPrice, category: id },
+          "http://localhost:8000/category/add-category",
+          { name: newName, description: newDescription, user: id },
           { headers }
         );
-        if (data.msg === "Menu data inserted successfully") {
-          alert("New menu added");
+        if (data.msg === "New category added.") {
+          alert("New category added");
           window.location.reload();
         } else {
-          alert("Error in adding menu");
+          alert("Error in adding category");
         }
       }
     } catch (error) {
@@ -108,20 +107,20 @@ function AdminMenu() {
 
   return (
     <div className="container">
-      <h1>Menu Details</h1>
+      <h1>Category Details</h1>
       <button
         style={{ marginLeft: "1000px", marginBottom: "20px" }}
         className="button"
         onClick={handleAdd}
       >
-        Add Menu
+        Add Category
       </button>
       <table className="table">
         <thead>
           <tr>
             <th>S.no</th>
             <th>Name</th>
-            <th>Price</th>
+            <th>Description</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -131,7 +130,7 @@ function AdminMenu() {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{e.name}</td>
-                <td>{e.price}</td>
+                <td>{e.description}</td>
                 <td>
                   <button
                     onClick={() => handelUpdate(e._id)}
@@ -145,6 +144,9 @@ function AdminMenu() {
                   >
                     Delete
                   </button>
+                  <Link to={`/admin-menu/${e._id}`}>
+                  <button className="button-visit">Menu</button>
+                  </Link>
                 </td>
               </tr>
             );
@@ -154,7 +156,7 @@ function AdminMenu() {
       {showModal && (
         <div className="modal-container">
           <div className="modal-header">
-            <div className="modal-title">Edit Menu</div>
+            <div className="modal-title">Edit Category</div>
             <button
               className="close-button"
               onClick={() => setShowModal(false)}
@@ -164,21 +166,21 @@ function AdminMenu() {
           </div>
           <div className="modal-body">
             <div>
-              <label>Menu name:</label>
+              <label>Category name:</label>
               <input
                 type="text"
-                placeholder="menu name"
+                placeholder="category name"
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
               />
             </div>
             <div>
-              <label>Price:</label>
+              <label>Description:</label>
               <input
-                type="string"
+                type="text"
                 placeholder="description"
-                value={editPrice}
-                onChange={(e) => setEditPrice(e.target.value)}
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
               />
             </div>
             <div>
@@ -192,7 +194,7 @@ function AdminMenu() {
       {showAddModal && (
         <div className="modal-container">
           <div className="modal-header">
-            <div className="modal-title">Add Menu</div>
+            <div className="modal-title">Add Category Modal</div>
             <button
               className="close-button"
               onClick={() => setShowAddModal(false)}
@@ -202,21 +204,21 @@ function AdminMenu() {
           </div>
           <div className="modal-body">
             <div>
-              <label>Menu name : </label>
+              <label>Category name : </label>
               <input
                 type="text"
-                placeholder="menu name"
+                placeholder="category name"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
               />
             </div>
             <div>
-              <label>Price : </label>
+              <label>Description : </label>
               <input
                 type="text"
                 placeholder="description"
-                value={newPrice}
-                onChange={(e) => setNewPrice(e.target.value)}
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
               />
             </div>
             <div>
@@ -231,4 +233,4 @@ function AdminMenu() {
   );
 }
 
-export default AdminMenu
+export default AdminCategory;

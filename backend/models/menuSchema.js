@@ -3,12 +3,10 @@ const mongoose = require("mongoose");
 const menuSchema = new mongoose.Schema(
   {
     name: String,
-    category: String,
-    price: Number,
-    qrCodeValue: String,
-    user: {
+    price: String,
+    category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "app_wrk_restaurants"
+      ref: "app_wrk_restaurants_category"
     },
   },
   { timestamps: true }

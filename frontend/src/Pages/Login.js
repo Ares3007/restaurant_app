@@ -15,7 +15,7 @@ function Login() {
         if(data.message==='login success'){
           localStorage.setItem('token',data.token);
           alert("Login successful!!!")
-            window.location.href=`/admin-menu/${data.user._id}`
+            window.location.href=`/admin-category/${data.user._id}`
         }else{
           alert("Login failed! Please check mail or password");
         }
