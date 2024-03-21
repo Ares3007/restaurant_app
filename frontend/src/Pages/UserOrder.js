@@ -15,6 +15,7 @@ function UserOrder() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://192.168.1.57:8000/menu/all-menu`);
+       // console.log(response.data)
         setMenuData(response.data);
       } catch (error) {
         console.error("Error in fetching data:", error);
@@ -72,7 +73,7 @@ function UserOrder() {
         <div>
           {Object.keys(groupedMenuItems).map((categoryName) => (
             <div key={categoryName} className="menu-category">
-              <h3>{categoryName}</h3>
+              <h3>{categoryName}</h3> 
               {groupedMenuItems[categoryName].map((menuItem) => (
                 <div key={menuItem._id} className="menu-item">
                   <label>
